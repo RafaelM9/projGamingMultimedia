@@ -5,6 +5,15 @@ public class DestroyByContact : MonoBehaviour
     public GameObject explosionAsteroid;
 
     public GameObject explosionPlayer;
+
+    private GameController gameController;
+
+    void Start()
+    {
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        gameController = gameControllerObject.GetComponent<GameController>();
+
+    }
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Boundary")
@@ -17,6 +26,7 @@ public class DestroyByContact : MonoBehaviour
             Destroy(other.gameObject); //shot
             Instantiate(explosionAsteroid,transform.position,transform.rotation);//instanciar explosão do asteroide
            //adicionar score
+           gameController.AddScore();
         }
 
         else //other=Player
@@ -24,6 +34,7 @@ public class DestroyByContact : MonoBehaviour
             Destroy(other.gameObject); //player
             Instantiate(explosionPlayer,other.transform.position,transform.rotation);//instanciar explosão do Player
            //gameOver
+           gameController.GameOver();
         }
 
        
